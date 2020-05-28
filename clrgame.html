@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>colorgame1</title>
+	<style type="text/css">
+		.square
+		{
+			width: 30%;
+			background-color: #43437a;
+			padding-bottom:20%;
+			margin: 1.66%;
+			float: left;
+			border-radius: 12px;
+			transition:background 0.8s;
+	
+		}
+		.container
+		{
+			margin: 0 auto;
+			max-width: 600px;
+		}
+		#demo
+		{
+			text-align: center;
+			color:white;
+			margin: 0px;
+			padding: 17px;
+			font-size: 20px;
+			font-weight:bold;
+
+		}
+		#le
+		{
+			text-align: left;
+		}
+	</style>
+	
+</head>
+<body>
+<div class="main" style="text-align: center;background-color: #48487a;color:white;height: 140px;padding:20px;">
+	<h3>ASHISH'S GREAT</h3>
+	<h1 id="guesscolor">rgb(250, 130, 50)</h1>
+	<h3>GUESSING GAME</h3>
+</div>
+<div class="navbar" style="background-color: gray;padding:20px;">
+	<!--<p style="text-align: left;color:white;
+			margin: 0px;padding: 17px;font-size: 20px;font-weight:bold;">You have <span>3</span> chances left..</p>-->
+	<p id="demo"><marquee>Welcome Zombie... Guess any one of the following colors that match with the above rgb value...You have only 3 attempts...All the best</marquee></p>
+</div>
+<div class="container">
+<div class="square"></div>
+<div class="square"></div>
+<div class="square"></div>
+<div class="square"></div>
+<div class="square"></div>
+<div class="square"></div>
+</div>
+<script>
+		//var colors=["rgb(100, 80, 60)","rgb(250, 130, 50)","rgb(40, 220, 100)","rgb(0, 90, 160)","rgb(250, 180, 160)","rgb(55, 10, 64)"];
+
+		var x=2;
+		
+		var colors=generatecolors();
+		var list=document.querySelectorAll(".square");
+		var k=0;
+		var pkdcolor=pickcolor();
+		document.getElementById("guesscolor").textContent=pkdcolor;
+		//console.log(pkdcolor);
+		for(var i=0;i<list.length;i++)
+		{
+			list[i].style.background=colors[i];
+			list[i].addEventListener("click",function()
+			{
+				//document.querySelector("body").style.background=this.style.background;
+				var clickcolor=this.style.background;
+				//console.log(clickcolor);
+				if(x<=0){
+					alert("too many times...\n press f5 for new game");
+					document.getElementById("demo").innerHTML="You Lost!!!";}
+					else{
+				if(clickcolor===pkdcolor)
+				{
+					document.getElementById("demo").innerHTML="Yay!! Correct \n press f5 for new game";
+					document.querySelector(".navbar").style.background="green";
+
+					document.querySelector(".main").style.background=this.style.background;
+					for(var p=0;p<list.length;p++)
+					{
+						list[p].style.background=this.style.background;
+					}
+				}
+				else
+				{
+					//to hide make its display to bg display which is white
+					document.getElementById("demo").innerHTML="Ayyoo!! Try Again...";
+					//document.querySelector(".navbar").style.background="red";
+					this.style.background="rgb(255, 255, 255)";
+					alert("wrong guess!!!\nonly "+(x--)+" Attempts left...")
+				}}
+			});
+		}
+		function generatecolors()
+		{
+			var arr=[];
+				for(var i=0;i<6;i++)
+				{
+					arr.push(makecolor());
+					console.log("ok");
+				}
+			return arr;
+		}
+		function makecolor()
+		{
+				var r=Math.floor(Math.random()*256);
+				var g=Math.floor(Math.random()*256);
+				var b=Math.floor(Math.random()*256);
+				return "rgb("+r+", "+g+", "+b+")";
+		}
+		function pickcolor()
+		{
+				var index=Math.floor(Math.random()*6);
+				return colors[index];
+		}
+</script>
+
+
+</body>
+</html>
